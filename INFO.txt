@@ -1,0 +1,8 @@
+Invalid object name 'dbo.AspNetUsers' in Asp.NET MVC 5 Entity Framework
+https://forums.asp.net/post/set/15/2141177/6208602
+https://blogs.msmvps.com/marafa/2014/06/13/how-to-create-asp-net-mvc-authentication-tables-in-an-existing-database/
+
+Entity Framework Code First: Executing SQL files on database creation
+http://www.drowningintechnicaldebt.com/ShawnWeisfeld/archive/2011/07/15/entity-framework-code-first-executing-sql-files-on-database-creation.aspx
+
+
