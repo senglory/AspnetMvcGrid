@@ -5,14 +5,14 @@ namespace GridExampleMVC.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<GridExampleMVC.Models.ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<GridExampleMVC.DAL.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(GridExampleMVC.Models.ApplicationDbContext context)
+        protected override void Seed(GridExampleMVC.DAL.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

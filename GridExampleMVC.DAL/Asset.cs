@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GridExampleMVC.Models
+namespace GridExampleMVC.DAL
 {
     public class Asset
     {

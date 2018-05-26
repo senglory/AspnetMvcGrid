@@ -1,28 +1,31 @@
 ﻿using System;
-using GridExampleMVC.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Web;
 using System.Web.Mvc;
+
 using Microsoft.AspNet.Identity.Owin;
 using DataTables.Mvc;
+
+using GridExampleMVC.DAL;
+
 
 
 namespace GridExampleMVC.Controllers
 {
-    [Authorize]
     public class AssetController : Controller
     {
 
         private ApplicationDbContext _dbContext;
 
-        public ApplicationDbContext DbContext
+        private ApplicationDbContext DbContext
         {
             get
             {
                 return _dbContext ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
             }
-            private set
+            set
             {
                 _dbContext = value;
             }
@@ -47,42 +50,18 @@ namespace GridExampleMVC.Controllers
 
         public ActionResult Get([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
-            IQueryable<Asset> query = DbContext.Assets;
-            var totalCount = query.Count();
+            var totalCount = DbContext.GetTotalCount();
 
-            #region Filtering
-            // Apply filters for searching
-            if (requestModel.Search.Value != string.Empty)
-            {
-                var value = requestModel.Search.Value.Trim();
-                query = query.Where(p => p.Barcode.Contains(value) ||
-                                         p.Manufacturer.Contains(value) ||
-                                         p.ModelNumber.Contains(value) ||
-                                         p.Building.Contains(value)
-                                   );
-            }
-
-            var filteredCount = query.Count();
-
-            #endregion Filtering
-
-            #region Sorting
-            // Sorting
+            var orderBy = new Dictionary<string, string>();
             var sortedColumns = requestModel.Columns.GetSortedColumns();
-            var orderByString = String.Empty;
 
             foreach (var column in sortedColumns)
             {
-                orderByString += orderByString != String.Empty ? "," : "";
-                orderByString += (column.Data) + (column.SortDirection == Column.OrderDirection.Ascendant ? " asc" : " desc");
+                orderBy[column.Data] = column.SortDirection.ToString();
             }
 
-            query = query.OrderBy(orderByString == string.Empty ? "BarCode asc" : orderByString);
+            var query = DbContext.GetResults(requestModel.Search.Value, requestModel.Start, requestModel.Length, orderBy);
 
-            #endregion Sorting
-
-            // Paging
-            query = query.Skip(requestModel.Start).Take(requestModel.Length);
 
 
             var data = query.Select(asset => new
@@ -95,6 +74,8 @@ namespace GridExampleMVC.Controllers
                 RoomNo = asset.RoomNo,
                 Quantity = asset.Quantity
             }).ToList();
+
+            var filteredCount = data.Count;
 
             return Json(new DataTablesResponse(requestModel.Draw, data, filteredCount, totalCount), JsonRequestBehavior.AllowGet);
         }
