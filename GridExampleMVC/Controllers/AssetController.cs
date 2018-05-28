@@ -60,25 +60,9 @@ namespace GridExampleMVC.Controllers
                 orderBy[column.Data] = column.SortDirection.ToString();
             }
 
-            var query = DbContext.GetResults(requestModel.Search.Value, requestModel.Start, requestModel.Length, orderBy);
+            var queryResult = DbContext.GetResults(requestModel.Search.Value, requestModel.Start, requestModel.Length, orderBy);
 
-
-
-            var data = query.Select(asset => new
-            {
-                AssetID = asset.AssetID,
-                BarCode = asset.Barcode,
-                Manufacturer = asset.Manufacturer,
-                ModelNumber = asset.ModelNumber,
-                Building = asset.Building,
-                RoomNo = asset.RoomNo,
-                Quantity = asset.Quantity
-            }).ToList();
-
-            var filteredCount = data.Count;
-
-            return Json(new DataTablesResponse(requestModel.Draw, data, filteredCount, totalCount), JsonRequestBehavior.AllowGet);
+            return Json(new DataTablesResponse(requestModel.Draw, queryResult.Data, queryResult.FilteredCount, queryResult.TotalCount), JsonRequestBehavior.AllowGet);
         }
-
     }
 }

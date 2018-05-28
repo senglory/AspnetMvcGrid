@@ -23,9 +23,9 @@
 
                 init: function () {
                     dt = $('#assets-data-table').DataTable({
-                        "serverSide": true,
-                        "processing": true,
-                        "ajax": {
+                        serverSide: true,
+                        processing: true,
+                        ajax: {
                             "url": "@Url.Action("Get","Asset")"
                         },
                         "columns": [

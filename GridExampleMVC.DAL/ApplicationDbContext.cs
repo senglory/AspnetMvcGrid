@@ -9,11 +9,39 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
+using AutoMapper;
+
+using GridExampleMVC.DAL.DTO;
+
 
 namespace GridExampleMVC.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUserIdentity>
     {
+        static readonly MapperConfiguration config;
+        static readonly IMapper mapper;
+
+        static ApplicationDbContext()
+        {
+            config = new MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Asset, AssetDto>()
+                    .ForMember(d => d.BarCode, op => op.ResolveUsing(ctx =>
+                    {
+                        {
+                            var ls = ctx;
+                            return ls.Barcode;
+                        }
+                    }));
+
+
+                cfg.IgnoreUnmapped();
+            });
+            config.AssertConfigurationIsValid();
+            mapper = config.CreateMapper();
+
+        }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -33,7 +61,7 @@ namespace GridExampleMVC.DAL
             return totalCount;
         }
 
-        public IQueryable<Asset> GetResults(string filterByValue, int start, int length, Dictionary<string , string > orderBy)
+        public QueryResult GetResults(string filterByValue, int start, int length, Dictionary<string , string > orderBy)
         {
             IQueryable<Asset> query = this.Assets;
             var totalCount = query.Count();
@@ -70,8 +98,12 @@ namespace GridExampleMVC.DAL
             #endregion Sorting
 
             // Paging
-            query = query.Skip( start).Take(length);
-            return query;
+            var query2 = query.Skip( start).Take(length);
+
+            var tmp2 = mapper.Map<List< AssetDto>>(query2.Select(x => x).ToList());
+
+            var queryResult = new QueryResult(tmp2,  query.Count(), totalCount );
+            return queryResult;
         }
     }
 }
