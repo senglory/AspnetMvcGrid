@@ -491,6 +491,10 @@
       <Project>{29278cf8-9f6f-42c3-9317-505e00e966e0}</Project>
       <Name>AspnetMvcGrid.DAL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\AspnetMvcGrid.Interfaces\AspnetMvcGrid.Interfaces.csproj">
+      <Project>{3d9e4a9c-54cf-40fd-ae58-7e73ed5b20cd}</Project>
+      <Name>AspnetMvcGrid.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

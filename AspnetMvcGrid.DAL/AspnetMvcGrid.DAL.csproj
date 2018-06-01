@@ -68,7 +68,6 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="ApplicationUserIdentity.cs" />
     <Compile Include="Asset.cs" />
-    <Compile Include="DTO\AssetDto.cs" />
     <Compile Include="MapperHelper.cs" />
     <Compile Include="Migrations\201805241908298_Init.cs" />
     <Compile Include="Migrations\201805241908298_Init.Designer.cs">
@@ -76,7 +75,6 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="QueryResult.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -86,6 +84,12 @@
     <EmbeddedResource Include="Migrations\201805241908298_Init.resx">
       <DependentUpon>201805241908298_Init.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AspnetMvcGrid.Interfaces\AspnetMvcGrid.Interfaces.csproj">
+      <Project>{3d9e4a9c-54cf-40fd-ae58-7e73ed5b20cd}</Project>
+      <Name>AspnetMvcGrid.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

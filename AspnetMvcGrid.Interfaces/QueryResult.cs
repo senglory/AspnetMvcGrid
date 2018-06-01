@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using AspnetMvcGrid.DAL.DTO;
+using AspnetMvcGrid.Interfaces.DTO;
 
 
 
-namespace AspnetMvcGrid.DAL
+namespace AspnetMvcGrid.Interfaces
 {
     public class QueryResult
     {

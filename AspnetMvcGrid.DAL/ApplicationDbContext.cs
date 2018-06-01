@@ -11,12 +11,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 using AutoMapper;
 
-using AspnetMvcGrid.DAL.DTO;
+using AspnetMvcGrid.Interfaces.DTO;
+using AspnetMvcGrid.Interfaces;
 
 
 namespace AspnetMvcGrid.DAL
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUserIdentity>
+        , IAppDbContext
     {
         static readonly MapperConfiguration config;
         static readonly IMapper mapper;

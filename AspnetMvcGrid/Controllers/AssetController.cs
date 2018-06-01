@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity.Owin;
 using DataTables.Mvc;
 
 using AspnetMvcGrid.DAL;
+using AspnetMvcGrid.Interfaces;
 
 
 
@@ -17,9 +18,9 @@ namespace AspnetMvcGrid.Controllers
     public class AssetController : Controller
     {
 
-        private ApplicationDbContext _dbContext;
+        private IAppDbContext _dbContext;
 
-        private ApplicationDbContext DbContext
+        private IAppDbContext DbContext
         {
             get
             {

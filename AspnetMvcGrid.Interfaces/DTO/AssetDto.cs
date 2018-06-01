@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AspnetMvcGrid.DAL.DTO
+namespace AspnetMvcGrid.Interfaces.DTO
 {
     public class AssetDto
     {
