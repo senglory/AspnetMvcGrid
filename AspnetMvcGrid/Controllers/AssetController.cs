@@ -20,25 +20,13 @@ namespace AspnetMvcGrid.Controllers
 
         private IAppDbContext _dbContext;
 
-        private IAppDbContext DbContext
-        {
-            get
-            {
-                return _dbContext ?? HttpContext.GetOwinContext().Get<ApplicationDbContext>();
-            }
-            set
-            {
-                _dbContext = value;
-            }
-
-        }
 
         public AssetController()
         {
 
         }
 
-        public AssetController(ApplicationDbContext dbContext)
+        public AssetController(IAppDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -51,7 +39,7 @@ namespace AspnetMvcGrid.Controllers
 
         public ActionResult Get([ModelBinder(typeof(DataTablesBinder))] IDataTablesRequest requestModel)
         {
-            var totalCount = DbContext.GetTotalCount();
+            var totalCount = _dbContext.GetTotalCount();
 
             var orderBy = new Dictionary<string, string>();
             var sortedColumns = requestModel.Columns.GetSortedColumns();
@@ -61,7 +49,7 @@ namespace AspnetMvcGrid.Controllers
                 orderBy[column.Data] = column.SortDirection.ToString();
             }
 
-            var queryResult = DbContext.GetResults(requestModel.Search.Value, requestModel.Start, requestModel.Length, orderBy);
+            var queryResult = _dbContext.GetResults(requestModel.Search.Value, requestModel.Start, requestModel.Length, orderBy);
 
             return Json(new DataTablesResponse(requestModel.Draw, queryResult.Data, queryResult.FilteredCount, queryResult.TotalCount), JsonRequestBehavior.AllowGet);
         }
