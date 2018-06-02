@@ -9,7 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 
-using AspnetMvcGrid.DAL;
+using AspnetMvcGrid.Interfaces;
 using AspnetMvcGrid.ViewModels;
 
 namespace AspnetMvcGrid.Controllers
@@ -20,9 +20,9 @@ namespace AspnetMvcGrid.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController()
-        {
-        }
+        //public AccountController()
+        //{
+        //}
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {

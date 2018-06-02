@@ -8,13 +8,13 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity.Owin;
 using DataTables.Mvc;
 
-using AspnetMvcGrid.DAL;
 using AspnetMvcGrid.Interfaces;
 
 
 
 namespace AspnetMvcGrid.Controllers
 {
+    [Authorize]
     public class AssetController : Controller
     {
 

@@ -1,9 +1,13 @@
 using System;
 
 using Unity;
+using Microsoft.Practices.Unity.Configuration;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 using AspnetMvcGrid.Interfaces;
-using AspnetMvcGrid.DAL;
 
 
 
@@ -19,6 +23,7 @@ namespace AspnetMvcGrid
           new Lazy<IUnityContainer>(() =>
           {
               var container = new UnityContainer();
+              container.LoadConfiguration();
               RegisterTypes(container);
               return container;
           });
@@ -46,7 +51,22 @@ namespace AspnetMvcGrid
             // container.LoadConfiguration();
 
             // TODO: Register your type's mappings here.
-            container.RegisterType<IAppDbContext, ApplicationDbContext>();
+            //container.RegisterType<IAppDbContext, ApplicationDbContext>();
+            //container.RegisterType<IUserStore<ApplicationUser>, UserStore<ApplicationUser>>();
+         //container.RegisterType<UserManager<ApplicationUserIdentity>>();
+            //container.RegisterType<DbContext, ApplicationDbContext>();
+         //container.RegisterType<ApplicationUserManager>();
+            //container.RegisterType<AccountController>(new InjectionConstructor());
+        }
+
+        public static IAppDbContext CreateDbContext()
+        {
+            return Container.Resolve< IAppDbContext>();
+        }
+
+        public static IAppDbContext CreateDbContext(string dataProviderName)
+        {
+            return Container.Resolve<IAppDbContext>(dataProviderName);
         }
     }
 }
