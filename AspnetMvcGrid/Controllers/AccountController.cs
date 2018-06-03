@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -12,33 +13,34 @@ using Microsoft.Owin.Security;
 using AspnetMvcGrid.Interfaces;
 using AspnetMvcGrid.ViewModels;
 
+
+
 namespace AspnetMvcGrid.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        private readonly ApplicationUserManager userManager;
+        private readonly ApplicationSignInManager signInManager;
+        private readonly IAuthenticationManager authenticationManager;
 
-        //public AccountController()
-        //{
-        //}
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController()
         {
-            UserManager = userManager;
-            SignInManager = signInManager;
+        }
+
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager)
+        {
+            this.userManager = userManager;
+            this.signInManager = signInManager;
+            this.authenticationManager = authenticationManager;
         }
 
         public ApplicationSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set 
-            { 
-                _signInManager = value; 
+                return signInManager;
             }
         }
 
@@ -46,11 +48,7 @@ namespace AspnetMvcGrid.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
+                return userManager;
             }
         }
 
@@ -403,26 +401,6 @@ namespace AspnetMvcGrid.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                if (_userManager != null)
-                {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null)
-                {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
         }
 
         #region Helpers

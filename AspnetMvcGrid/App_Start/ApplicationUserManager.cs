@@ -9,9 +9,9 @@ using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin.Security.DataProtection;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using Unity;
 
 using AspnetMvcGrid.Interfaces;
 
@@ -26,54 +26,51 @@ namespace AspnetMvcGrid
         public ApplicationUserManager(IUserStore<ApplicationUserIdentity> store)
             : base(store)
         {
-        }
+            //var ctx = UnityConfig.Container.Resolve<DbContext>();// as DbContext;
+            //var manager = new ApplicationUserManager(new UserStore<ApplicationUserIdentity>(ctx));
 
-        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
-        {
-            var ctx = UnityConfig.Container.Resolve<DbContext>();// as DbContext;
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUserIdentity>(ctx));
+
             // Configure validation logic for usernames
-            manager.UserValidator = new UserValidator<ApplicationUserIdentity>(manager)
+            UserValidator = new UserValidator<ApplicationUserIdentity>(this)
             {
                 AllowOnlyAlphanumericUserNames = false,
                 RequireUniqueEmail = true
             };
 
             // Configure validation logic for passwords
-            manager.PasswordValidator = new PasswordValidator
+            PasswordValidator = new PasswordValidator
             {
                 RequiredLength = 6,
-                RequireNonLetterOrDigit = false ,
+                RequireNonLetterOrDigit = false,
                 RequireDigit = true,
-                RequireLowercase = false ,
-                RequireUppercase = false ,
+                RequireLowercase = false,
+                RequireUppercase = false,
             };
 
             // Configure user lockout defaults
-            manager.UserLockoutEnabledByDefault = true;
-            manager.DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
-            manager.MaxFailedAccessAttemptsBeforeLockout = 5;
+            UserLockoutEnabledByDefault = true;
+            DefaultAccountLockoutTimeSpan = TimeSpan.FromMinutes(5);
+            MaxFailedAccessAttemptsBeforeLockout = 5;
 
             // Register two factor authentication providers. This application uses Phone and Emails as a step of receiving a code for verifying the user
             // You can write your own provider and plug it in here.
-            manager.RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUserIdentity>
+            RegisterTwoFactorProvider("Phone Code", new PhoneNumberTokenProvider<ApplicationUserIdentity>
             {
                 MessageFormat = "Your security code is {0}"
             });
-            manager.RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUserIdentity>
+            RegisterTwoFactorProvider("Email Code", new EmailTokenProvider<ApplicationUserIdentity>
             {
                 Subject = "Security Code",
                 BodyFormat = "Your security code is {0}"
             });
-            manager.EmailService = new EmailService();
-            manager.SmsService = new SmsService();
-            var dataProtectionProvider = options.DataProtectionProvider;
+            EmailService = new EmailService();
+            SmsService = new SmsService();
+            var dataProtectionProvider = Startup.DataProtectionProvider;
             if (dataProtectionProvider != null)
             {
-                manager.UserTokenProvider =
-                    new DataProtectorTokenProvider<ApplicationUserIdentity>(dataProtectionProvider.Create("ASP.NET Identity"));
+                IDataProtector dataProtector = dataProtectionProvider.Create("ASP.NET Identity");
+                UserTokenProvider = new DataProtectorTokenProvider<ApplicationUserIdentity>(dataProtector);
             }
-            return manager;
         }
     }
 }

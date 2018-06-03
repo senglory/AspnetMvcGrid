@@ -30,7 +30,7 @@ namespace AspnetMvcGrid.Controllers
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager;
             }
             private set 
             { 
