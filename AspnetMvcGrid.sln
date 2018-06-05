@@ -9,6 +9,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspnetMvcGrid.DAL", "Aspnet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspnetMvcGrid.Interfaces", "AspnetMvcGrid.Interfaces\AspnetMvcGrid.Interfaces.csproj", "{3D9E4A9C-54CF-40FD-AE58-7E73ED5B20CD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B509F332-6B56-4C58-8C33-CD77BA5BC10F}"
+	ProjectSection(SolutionItems) = preProject
+		INFO.txt = INFO.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

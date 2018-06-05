@@ -1,13 +1,15 @@
 using System;
+using System.Web;
 
 using Microsoft.Practices.Unity;
-
-using AspnetMvcGrid.Interfaces;
-using AspnetMvcGrid.DAL;
+using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Owin.Security;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+
+using AspnetMvcGrid.Interfaces;
+
+
 
 namespace AspnetMvcGrid.App_Start
 {
@@ -40,10 +42,10 @@ namespace AspnetMvcGrid.App_Start
         public static void RegisterTypes(IUnityContainer container)
         {
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
-            // container.LoadConfiguration();
+            container.LoadConfiguration();
 
-            container.RegisterType(typeof(IAppDbContext), typeof(ApplicationDbContext));
-            container.RegisterType<ApplicationDbContext>();
+            //container.RegisterType(typeof(IAppDbContext), typeof(ApplicationDbContext));
+            //container.RegisterType<ApplicationDbContext>();
             container.RegisterType<ApplicationSignInManager>();
             container.RegisterType<ApplicationUserManager>();
             //container.RegisterType<EmailService>();
@@ -51,8 +53,8 @@ namespace AspnetMvcGrid.App_Start
             container.RegisterType<IAuthenticationManager>(
                 new InjectionFactory(c => HttpContext.Current.GetOwinContext().Authentication));
 
-            container.RegisterType<IUserStore<ApplicationUserIdentity>, UserStore<ApplicationUserIdentity>>(
-                new InjectionConstructor(typeof(ApplicationDbContext)));
+            //container.RegisterType<IUserStore<ApplicationUserIdentity>, UserStore<ApplicationUserIdentity>>(
+            //    new InjectionConstructor(typeof(ApplicationDbContext)));
         }
     }
 }

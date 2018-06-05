@@ -5,4 +5,12 @@ https://blogs.msmvps.com/marafa/2014/06/13/how-to-create-asp-net-mvc-authenticat
 Entity Framework Code First: Executing SQL files on database creation
 http://www.drowningintechnicaldebt.com/ShawnWeisfeld/archive/2011/07/15/entity-framework-code-first-executing-sql-files-on-database-creation.aspx
 
+Register IAuthenticationManager with Unity
+
+https://stackoverflow.com/questions/23810055/microsoft-practice-using-unity-register-type/23810935
+https://tech.trailmax.info/2014/09/aspnet-identity-and-ioc-container-registration/
+Problem with Unity and MVC5 (MVC4 OK)
+https://tech.trailmax.info/2014/09/aspnet-identity-and-ioc-container-registration/#comment-3884292348
+Sample ASP.Net MVC project with Identity Framework and Unity DI container configuration
+https://github.com/trailmax/IoCIdentitySample/tree/Part1
 

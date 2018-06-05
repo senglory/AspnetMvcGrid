@@ -13,6 +13,12 @@ namespace AspnetMvcGrid.Interfaces
     [Table("AspNetUsers")]
     public class ApplicationUserIdentity : IdentityUser
     {
+        public ApplicationUserIdentity() 
+            : base()
+        {
+
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUserIdentity> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
