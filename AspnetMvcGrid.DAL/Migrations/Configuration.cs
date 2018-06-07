@@ -9,7 +9,7 @@ namespace AspnetMvcGrid.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(AspnetMvcGrid.DAL.ApplicationDbContext context)

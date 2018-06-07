@@ -10,28 +10,17 @@ namespace AspnetMvcGrid.Migrations
             CreateTable(
                 "dbo.Assets",
                 c => new
-                    {
-                        AssetID = c.Guid(nullable: false),
-                        Barcode = c.String(),
-                        SerialNumber = c.String(),
-                        FacilitySite = c.String(),
-                        PMGuide = c.String(),
-                        AstID = c.String(nullable: false),
-                        ChildAsset = c.String(),
-                        GeneralAssetDescription = c.String(),
-                        SecondaryAssetDescription = c.String(),
-                        Quantity = c.Int(nullable: false),
-                        Manufacturer = c.String(),
-                        ModelNumber = c.String(),
-                        Building = c.String(),
-                        Floor = c.String(),
-                        Corridor = c.String(),
-                        RoomNo = c.String(),
-                        MERNo = c.String(),
-                        EquipSystem = c.String(),
-                        Comments = c.String(),
-                        Issued = c.Boolean(nullable: false),
-                    })
+                {
+                    AssetID = c.Guid(nullable: false),
+                    FirstName = c.String(nullable: false),
+                    LastName = c.String(nullable: false),
+                    AssetDate = c.DateTime(nullable: false),
+                    AssetNumber = c.String(nullable: false),
+                    OrgName = c.String(nullable: false),
+                    Position = c.String(nullable: false),
+                    EMail = c.String(),
+                    ApprovalDate = c.DateTime()
+                })
                 .PrimaryKey(t => t.AssetID);
             
             CreateTable(

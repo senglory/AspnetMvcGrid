@@ -28,11 +28,11 @@ namespace AspnetMvcGrid.DAL
             config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Asset, AssetDto>()
-                    .ForMember(d => d.BarCode, op => op.ResolveUsing(ctx =>
+                    .ForMember(d => d.FIO, op => op.ResolveUsing(ctx =>
                     {
                         {
                             var ls = ctx;
-                            return ls.Barcode;
+                            return ls.FirstName + " " + ls.LastName;
                         }
                     }));
 
@@ -74,10 +74,12 @@ namespace AspnetMvcGrid.DAL
             {
                 var value = filterByValue.Trim();
 
-                query = query.Where(p => p.Barcode.Contains(value) ||
-                                         p.Manufacturer.Contains(value) ||
-                                         p.ModelNumber.Contains(value) ||
-                                         p.Building.Contains(value)
+                query = query.Where(p => p.FirstName.Contains(value) ||
+                                         p.LastName.Contains(value) ||
+                                         p.OrgName.Contains(value) ||
+                                         p.Position.Contains(value) ||
+                                         p.EMail.Contains(value) ||
+                                         p.AssetNumber.Contains(value)
                                    );
             }
 
@@ -95,7 +97,10 @@ namespace AspnetMvcGrid.DAL
                 orderByString += (column.Key) + (column.Value == "Ascendant" ? " asc" : " desc");
             }
 
-            query = query.OrderBy(orderByString == string.Empty ? "BarCode asc" : orderByString);
+            // !!!!!!!!!!!!!!!!!!!
+            // REVERT
+            //query = query.OrderBy(orderByString == string.Empty ? "BarCode asc" : orderByString);
+            query = query.OrderBy("AssetNumber");
 
             #endregion Sorting
 

@@ -14,7 +14,7 @@ using AspnetMvcGrid.Interfaces;
 
 namespace AspnetMvcGrid.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class AssetController : Controller
     {
 
